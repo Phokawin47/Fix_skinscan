@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ScanHistoryController;
 use App\Http\Controllers\Admin\UserAdminController;
 
 /*
@@ -85,6 +86,11 @@ Route::get('/Skinscan/aboutus', fn () => view('aboutus'))->name('aboutus.idx');
 Route::get('/Skinscan/search', [ProductController::class, 'index'])->name('search');
 Route::get('/search', [ProductController::class, 'index'])->name('products.search');
 
+// Scan History (ต้องล็อกอิน)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/Skinscan/history', [ScanHistoryController::class, 'index'])->name('scan_history.idx');
+});
+
 
 
     /*
@@ -139,5 +145,8 @@ Route::middleware(['auth','role:admin'])
         Route::get('/users/{user}/edit',[UserAdminController::class, 'edit'])->name('users.edit');
         Route::put('/users/{user}',     [UserAdminController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}',  [UserAdminController::class, 'destroy'])->name('users.destroy'); // ถ้าต้องการลบ
+        // Users History
+        Route::get('/users-history', [UserAdminController::class, 'historyIndex'])->name('users.history.index');
+        Route::get('/users/{user}/history', [UserAdminController::class, 'historyShow'])->name('users.history.show');
     });
 
