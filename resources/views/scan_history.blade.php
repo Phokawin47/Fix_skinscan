@@ -17,11 +17,11 @@
     .scan-meta { display:flex; justify-content:space-between; color:#6b7280; font-size:.85rem; margin-top:.25rem; }
 
     /* Make cards taller to push footer down when there are few items */
-    .scan-card { min-height: 520px; }
-    @media (max-width: 768px) { .scan-card { min-height: 420px; } }
+    .scan-card { min-height: 560px; }
+    @media (max-width: 768px) { .scan-card { min-height: 460px; } }
 
     /* Ensure section itself has enough height on very short pages */
-    .scan-history-section { min-height: 70vh; padding-bottom: 24px; }
+    .scan-history-section { min-height: 82vh; padding-bottom: 24px; }
   </style>
 @endpush
 
