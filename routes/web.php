@@ -55,22 +55,37 @@ Route::middleware([
 | Skinscan (ต้องล็อกอิน)
 |--------------------------------------------------------------------------
 */
-Route::middleware($authStack)->group(function () {
+// Route::middleware($authStack)->group(function () {
 
-    // โฮม
-    Route::get('/Skinscan/home', fn () => view('home'))->name('home.idx');
+//     // โฮม
+//     Route::get('/Skinscan/home', fn () => view('home'))->name('home.idx');
 
-    // ชอร์ตคัท /Skinscan -> /Skinscan/home
-    Route::get('/Skinscan', fn () => redirect()->route('home.idx'))->name('redirect.idx');
+//     // ชอร์ตคัท /Skinscan -> /Skinscan/home
+//     Route::get('/Skinscan', fn () => redirect()->route('home.idx'))->name('redirect.idx');
 
-    // หน้าอื่น ๆ
-    Route::get('/Skinscan/anceinfomation', fn () => view('anceinfomation'))->name('anceinfomation.idx');
-    Route::get('/Skinscan/facescan', fn () => view('facescan'))->name('facescan.idx');
-    Route::get('/Skinscan/aboutus', fn () => view('aboutus'))->name('aboutus.idx');
+//     // หน้าอื่น ๆ
+//     Route::get('/Skinscan/anceinfomation', fn () => view('anceinfomation'))->name('anceinfomation.idx');
+//     Route::get('/Skinscan/facescan', fn () => view('facescan'))->name('facescan.idx');
+//     Route::get('/Skinscan/aboutus', fn () => view('aboutus'))->name('aboutus.idx');
 
-    // Search (คงทั้ง 2 เส้นทางไว้ตามที่มี)
-    Route::get('/Skinscan/search', [ProductController::class, 'index'])->name('search');
-    Route::get('/search', [ProductController::class, 'index'])->name('products.search');
+//     // Search (คงทั้ง 2 เส้นทางไว้ตามที่มี)
+//     Route::get('/Skinscan/search', [ProductController::class, 'index'])->name('search');
+//     Route::get('/search', [ProductController::class, 'index'])->name('products.search');
+
+/*
+|--------------------------------------------------------------------------
+| Skinscan (Public)
+|--------------------------------------------------------------------------
+*/
+Route::get('/Skinscan/home', fn () => view('home'))->name('home.idx');
+Route::get('/Skinscan', fn () => redirect()->route('home.idx'))->name('redirect.idx');
+Route::get('/Skinscan/anceinfomation', fn () => view('anceinfomation'))->name('anceinfomation.idx');
+Route::get('/Skinscan/facescan', fn () => view('facescan'))->name('facescan.idx');
+Route::get('/Skinscan/aboutus', fn () => view('aboutus'))->name('aboutus.idx');
+Route::get('/Skinscan/search', [ProductController::class, 'index'])->name('search');
+Route::get('/search', [ProductController::class, 'index'])->name('products.search');
+
+
 
     /*
     |----------------------------------------------------------------------
@@ -79,7 +94,7 @@ Route::middleware($authStack)->group(function () {
     |----------------------------------------------------------------------
     */
     Route::prefix('/Skinscan/product_management')
-        ->middleware('role:product_manager,admin')
+        ->middleware('role:product_manager,admin,gennal')
         ->group(function () {
             // index -> redirect ไปหน้า create (ตามพฤติกรรมเดิม แต่แก้ให้ถูก)
             Route::get('/', fn () => redirect()->route('product_management.create'))
@@ -99,7 +114,7 @@ Route::middleware($authStack)->group(function () {
             Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
             Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
         });
-});
+// });
 
 /*
 |--------------------------------------------------------------------------

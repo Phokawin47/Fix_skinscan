@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 // ⬇️ เพิ่ม use ให้มิดเดิลแวร์ของคุณ
 use App\Http\Middleware\EnsureUserHasRole;
 // (ถ้ามีอันอื่น เช่น EnsureProfileCompleted ก็ use ได้)
@@ -21,6 +21,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
             // 'profile.completed' => EnsureProfileCompleted::class, // ถ้ามี
+        ]);
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
+        $middleware->web(append: [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
+        $middleware->api(prepend: [
+            EnsureFrontendRequestsAreStateful::class,
         ]);
 
         // ตัวอย่างถ้าอยากผูกเข้ากลุ่ม web อัตโนมัติ:

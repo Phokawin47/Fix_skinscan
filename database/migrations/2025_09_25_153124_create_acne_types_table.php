@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void {
         Schema::create('acne_types', function (Blueprint $table) {
             $table->increments('acne_type_id');
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->text('causes')->nullable();
-            $table->text('treatment_options')->nullable();
+            $table->string('acne_type_name')->unique();
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -11,21 +11,17 @@ class ScanHistory extends Model
 
     protected $table = 'scan_history';
     protected $primaryKey = 'scan_id';
-    public $timestamps = false; // We use scan_timestamp instead
+    public $timestamps = true; // We use scan_timestamp instead
+    public $incrementing = true;
+    protected $keyType = 'int';
 
+    protected $fillable = [
+        'user_id','skin_type','result_image_path'
+    ];
     /**
      * Get the user that owns the scan history.
      */
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
+    public function user() { return $this->belongsTo(User::class, 'user_id'); }
+    public function results() { return $this->hasMany(ScanResult::class, 'scan_id'); }
 
-    /**
-     * The acne types detected in this scan.
-     */
-    public function detectedAcnes()
-    {
-        return $this->belongsToMany(AcneType::class, 'scan_results', 'scan_id', 'acne_type_id');
-    }
 }

@@ -10,6 +10,7 @@ class AcneType extends Model
     use HasFactory;
 
     protected $primaryKey = 'acne_type_id';
+    protected $fillable = ['acne_type_name'];
     public $timestamps = false;
 
     /**
