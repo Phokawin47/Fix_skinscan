@@ -63,6 +63,7 @@
                                     <div class="border-t border-gray-200"></div>
                                     <div class="block px-4 py-2 text-xs text-gray-400">Admin</div>
                                     <x-dropdown-link href="{{ route('admin.users.index') }}">Users</x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('admin.users.history.index') }}">Users History</x-dropdown-link>
                                     {{-- เพิ่มเมนูแอดมินอื่น ๆ ได้ที่นี่ --}}
                                 @endif
 
@@ -76,6 +77,11 @@
                                 <div class="border-t border-gray-200"></div>
                                 <form method="POST" action="{{ route('logout') }}" x-data>
                                     @csrf
+                                    @if(!auth()->user()->hasRole('admin'))
+                                    <x-dropdown-link href="{{ route('scan_history.idx') }}">
+                                        {{ __('Scan History') }}
+                                    </x-dropdown-link>
+                                    @endif
                                     <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
@@ -97,6 +103,9 @@
             <a href="{{ route('home.idx') }}" class="nav-link-mobile">Home</a>
             <a href="{{ route('anceinfomation.idx') }}" class="nav-link-mobile">Acne Info</a>
             <a href="{{ route('facescan.idx') }}" class="nav-link-mobile">Face Scan</a>
+            @auth
+            <a href="{{ route('scan_history.idx') }}" class="nav-link-mobile">Scan History</a>
+            @endauth
             <a href="{{ route('aboutus.idx') }}" class="nav-link-mobile">About Us</a>
             <a href="{{ route('facescan.idx') }}" class="cta-button-mobile">
                 <i class="fas fa-camera"></i><span>Scan Now</span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\ScanHistory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -77,5 +78,39 @@ class UserAdminController extends Controller
         }
         $user->delete();
         return back()->with('ok', 'ลบผู้ใช้เรียบร้อย');
+    }
+
+    // GET /admin/users-history  — รายการผู้ใช้พร้อมจำนวนสแกน
+    public function historyIndex(Request $request)
+    {
+        $q    = trim($request->input('q', ''));
+
+        $users = User::query()
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($w) use ($q) {
+                    $w->where('username', 'like', "%{$q}%")
+                      ->orWhere('email', 'like', "%{$q}%")
+                      ->orWhere('first_name', 'like', "%{$q}%")
+                      ->orWhere('last_name', 'like', "%{$q}%");
+                });
+            })
+            ->withCount('scanHistories')
+            ->orderByDesc('scan_histories_count')
+            ->paginate(15)
+            ->appends($request->query());
+
+        return view('admin.users.history_index', compact('users', 'q'));
+    }
+
+    // GET /admin/users/{user}/history — ประวัติของผู้ใช้เฉพาะคน
+    public function historyShow(User $user, Request $request)
+    {
+        $scans = ScanHistory::with(['results.acneType','skinType'])
+            ->where('user_id', $user->id)
+            ->orderByDesc('scan_timestamp')
+            ->paginate(10)
+            ->appends($request->query());
+
+        return view('admin.users.history_show', compact('user','scans'));
     }
 }
