@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Skinscan</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -182,13 +183,6 @@
                             </div>
 
                             <div class="skincare-grid" id="skincareCards"></div>
-
-
-
-
-
-
-
                             <div class="disclaimer">
                                 <p><strong>Disclaimer:</strong> ผลิตภัณฑ์ดูแลผิวที่ระบบแนะนำ เป็นไปตามข้อมูลการวิเคราะห์เบื้องต้นและไม่ได้ถือเป็นคำวินิจฉัยทางการแพทย์ หากพบอาการระคายเคือง แพ้ หรือผิดปกติใด ๆ หลังการใช้ผลิตภัณฑ์ ควรหยุดใช้ทันที และปรึกษาแพทย์หรือผู้เชี่ยวชาญด้านผิวหนัง เพื่อความปลอดภัยและผลลัพธ์ที่เหมาะสมที่สุดต่อสภาพผิวของคุณ.</p>
                             </div>

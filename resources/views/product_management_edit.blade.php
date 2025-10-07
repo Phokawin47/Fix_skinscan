@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -34,7 +34,7 @@
 
             <div class="container mt-4">
                 <h4 class="mb-4 text-center">สินค้าทั้งหมด</h4>
-                
+
                 @if($products->count() > 0)
                     <div class="row" id="product-list">
                         @foreach($products as $product)
@@ -167,12 +167,12 @@
             // Clear any existing modals
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open');
-            
+
             // Set values immediately
             $('#edit-product-id').val(productId);
             $('#edit-usage-details').val(usageDetails);
             $('#edit-suitability-info').val(suitabilityInfo);
-            
+
             // Show modal
             $('#editProductModal').modal('show');
         });
@@ -187,7 +187,7 @@
             $(this).prop('disabled', true).text('กำลังบันทึก...');
 
             $.ajax({
-                url: '/products/' + productId,
+                url: '/Skinscan/product_management/' + productId,
                 type: 'PUT',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
@@ -223,7 +223,7 @@
 
             if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้?')) {
                 $.ajax({
-                    url: '/products/' + productId,
+                    url: '/Skinscan/product_management/' + productId,
                     type: 'POST',
                     data: {
                         _token: $('meta[name="csrf-token"]').attr('content'),
@@ -231,9 +231,9 @@
                     },
                     success: function (response) {
                         if (response.success) {
-                            productCard.fadeOut('slow', function() { 
-                                $(this).remove(); 
-                                
+                            productCard.fadeOut('slow', function() {
+                                $(this).remove();
+
                                 // Check if no products left
                                 if ($('#product-list .col-md-4').length === 0) {
                                     $('#product-list').html(
@@ -244,7 +244,7 @@
                                     );
                                 }
                             });
-                            
+
                             // Show success message
                             $('<div class="alert alert-success alert-dismissible fade show" role="alert">' +
                               response.message +

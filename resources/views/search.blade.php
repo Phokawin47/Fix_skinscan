@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Skinscan</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -14,7 +15,7 @@
         }
 
         .section-products,
-        .products-grid {    
+        .products-grid {
         position: relative;
         overflow: visible !important;
         }
@@ -135,7 +136,7 @@
             <div class="flex items-center gap-2">
                 <div class="flex-1 relative">
                 <input
-                    name="q"                       
+                    name="q"
                     value="{{ request('q') }}"
                     placeholder="ค้นหาชื่อผลิตภัณฑ์"
                     class="w-full h-11 rounded-full border border-gray-200 pl-5 pr-24 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
@@ -145,7 +146,7 @@
                     Advanced
                 </button>
 
-                <button type="submit"          
+                <button type="submit"
                     class="absolute right-1 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center border border-gray-300 hover:bg-gray-50">
                     <i class="fa-solid fa-magnifying-glass text-gray-600"></i>
                 </button>
@@ -229,7 +230,7 @@
         </section>
     </main>
 
-    
+
 
 
     <!-- Footer -->

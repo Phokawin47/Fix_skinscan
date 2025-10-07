@@ -247,7 +247,7 @@ class ProductController extends Controller
             $product->skinTypes()->detach();
         }
 
-        return redirect()->route('product_management_edit.idx')->with('success', 'บันทึกข้อมูลสินค้าเรียบร้อย!');
+        return redirect()->route('product_management.edit')->with('success', 'บันทึกข้อมูลสินค้าเรียบร้อย!');
     }
 
     /**
