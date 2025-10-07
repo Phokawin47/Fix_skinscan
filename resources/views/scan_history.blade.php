@@ -15,11 +15,18 @@
     .chip { padding:.25rem .6rem; border-radius:999px; background:#eef2ff; color:#3730a3; font-weight:600; font-size:.8rem; }
     .chip-more { background:#e5e7eb; color:#111827; }
     .scan-meta { display:flex; justify-content:space-between; color:#6b7280; font-size:.85rem; margin-top:.25rem; }
+
+    /* Make cards taller to push footer down when there are few items */
+    .scan-card { min-height: 520px; }
+    @media (max-width: 768px) { .scan-card { min-height: 420px; } }
+
+    /* Ensure section itself has enough height on very short pages */
+    .scan-history-section { min-height: 70vh; padding-bottom: 24px; }
   </style>
 @endpush
 
 @section('content')
-    <section class="features">
+    <section class="features scan-history-section">
         <div class="container">
             <div class="section-header">
                 <h2>ประวัติการสแกนของคุณ</h2>
@@ -127,6 +134,45 @@
             @endif
         </div>
     </section>
+
+    <!-- Footer (User pages only) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="{{URL::asset('image/Acne_W.png')}}" alt="AcneScan Logo" class="footer-logo-img">
+                        </div>
+                        <span class="logo-text">AcneScan</span>
+                    </div>
+                    <p>การวิเคราะห์สิวด้วย AI ขั้นสูง พร้อมคำแนะนำการดูแลผิวเฉพาะบุคคล ดูแลสุขภาพผิวของคุณด้วยเทคโนโลยีการสแกนระดับมืออาชีพ</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/Skinscan/home">Home</a></li>
+                        <li><a href="/Skinscan/anceinfomation">Acne Info</a></li>
+                        <li><a href="/Skinscan/facescan">Face Scan</a></li>
+                        <li><a href="/Skinscan/aboutus">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p>Phokawin.s@kkumail.com</p>
+                        <p>มหาวิทยาลัยขอนแก่น 123 หมู่ 16 <br>ถนนมิตรภาพ ตำบลในเมือง อำเภอเมืองขอนแก่น 40002</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 SkinScan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 @endsection
 
 
