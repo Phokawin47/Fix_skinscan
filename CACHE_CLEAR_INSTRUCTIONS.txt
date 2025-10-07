@@ -1,0 +1,32 @@
+BROWSER CACHE CLEARING INSTRUCTIONS
+====================================
+
+The error you're seeing is because your browser is using an old cached version of script.js.
+
+To fix this, please do ONE of the following:
+
+OPTION 1: Hard Refresh (Quickest)
+----------------------------------
+- Windows/Linux: Press Ctrl + Shift + R or Ctrl + F5
+- Mac: Press Cmd + Shift + R
+
+OPTION 2: Clear Browser Cache
+------------------------------
+Chrome/Edge:
+1. Press Ctrl + Shift + Delete
+2. Select "Cached images and files"
+3. Click "Clear data"
+
+Firefox:
+1. Press Ctrl + Shift + Delete
+2. Select "Cache"
+3. Click "Clear Now"
+
+OPTION 3: Open in Incognito/Private Mode
+-----------------------------------------
+- Chrome/Edge: Ctrl + Shift + N
+- Firefox: Ctrl + Shift + P
+
+After clearing cache, refresh the page and try uploading an image again.
+
+The fix has been applied to the script.js file to prevent the error from occurring.

@@ -330,7 +330,17 @@ window.addEventListener('beforeunload', function() {
 
 
 let rulesData = null;
-const rulesUrl = new URL('./rules.json', import.meta.url);
+
+fetch("/javascript/rules.json")
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return res.json();
+  })
+  .then(data => {
+    rulesData = data;
+    console.log("rules loaded:", rulesData);
+  })
+  .catch(err => console.error("โหลด rules.json ไม่สำเร็จ:", err));
 
 function getCookie(name) {
   const m = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]*)'));
@@ -377,6 +387,8 @@ function dataURLtoBlob(dataURL) {
 // ส่งภาพไปยัง API และแสดงผลลัพธ์
 const api_predict = (location.hostname === "localhost" || location.hostname === "10.225.0.13") ? "http://10.225.0.13:8001/predict" : "/api/predict";
 
+
+
 // ส่งภาพไปยัง API และแสดงผลลัพธ์ (แบบ multipart/form-data)
 async function sendImageToAPI(base64Image) {
   const imgTag = document.getElementById("resultImage");
@@ -415,11 +427,15 @@ async function sendImageToAPI(base64Image) {
     // ดันผลลัพธ์ไปแสดง
     result_push(result);
 
-    // อาจโหลด rules.json ยังไม่เสร็จในบางจังหวะ ให้กัน null ไว้
-    if (rulesData) {
+    // เช็คว่า rulesData โหลดเสร็จแล้วก่อนเรียก product_push
+    if (rulesData && rulesData["Product"]) {
       product_push(result, rulesData);
     } else {
       console.warn("rulesData ยังไม่พร้อม: ข้าม product_push รอบนี้");
+      const acneContainer = document.getElementById("acneTypeCardsContainer");
+      if (acneContainer) {
+        acneContainer.innerHTML = `<div class="no-product-card"><p>ไม่สามารถโหลดข้อมูลสินค้าได้</p></div>`;
+      }
     }
 
     showResults(annotatedDataUrl);
@@ -498,7 +514,13 @@ function result_push(result) {
 function product_push(result, rules) {
   const acneContainer = document.getElementById("acneTypeCardsContainer");
   acneContainer.innerHTML = "";
-  acneContainer.className = "acne-type-grid"; // เพิ่ม class grid
+  acneContainer.className = "acne-type-grid";
+
+  if (!rules || !rules["Product"]) {
+    console.error("Rules data not loaded or missing Product data");
+    acneContainer.innerHTML = `<div class="no-product-card"><p>ไม่สามารถโหลดข้อมูลสินค้าได้</p></div>`;
+    return;
+  }
 
   const ruleArray = result["rule_response"];
   const productLookup = createProductLookup(rules["Product"]);

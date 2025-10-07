@@ -74,6 +74,7 @@ function toggleTreatment(treatmentId) {
         icon.className = 'fas fa-chevron-up';
     }
 }
+window.toggleMobileMenu = toggleMobileMenu;
 
 // Face scan functionality
 function selectScanMode(mode) {
@@ -93,7 +94,7 @@ function selectScanMode(mode) {
         startCamera();
     }
 }
-
+window.selectScanMode = selectScanMode;
 async function startCamera() {
     try {
         stream = await navigator.mediaDevices.getUserMedia({
@@ -154,7 +155,7 @@ function capturePhoto() {
 
 
     }
-
+window.capturePhoto = capturePhoto;
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -165,19 +166,9 @@ function handleFileUpload(event) {
         reader.readAsDataURL(file);
     }
 }
+window.handleFileUpload = handleFileUpload;
 
 function startScan(imageUrl) {
-    let age_input = document.getElementById("age").value;
-    let gender_input = document.getElementById("gender").value;
-    let skinType_input = document.getElementById("skinType").value;
-    if (age_input > 90){
-        alert("ข้อมูลไม่ถูกต้อง");
-        return;
-    }
-    if (age_input === "" || gender_input === "" || skinType_input === "") {
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-        return; // หยุดการทำงานหากข้อมูลไม่ครบ
-    }
 
     // Hide current step
     document.getElementById('uploadMode').classList.remove('active');
@@ -192,7 +183,19 @@ function startScan(imageUrl) {
     sendImageToAPI(imageUrl);
 
 }
+window.startScan = startScan;
 
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const dataUrl = reader.result; // รูปแบบ: data:image/png;base64,AAAA...
+    await sendImageToAPI(dataUrl); // ส่งให้ backend
+  };
+  reader.readAsDataURL(file);
+});
 
 function showResults(imageUrl) {
     // Hide scanning state
@@ -243,7 +246,7 @@ function resetScan() {
     // Reset variables
     currentScanMode = null;
 }
-
+window.resetScan = resetScan;
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     // Show home page by default
@@ -325,73 +328,142 @@ window.addEventListener('beforeunload', function() {
 });
 
 
-function getUserInput() {
-    return {
-        age: document.getElementById("age")?.value || "",
-        gender: document.getElementById("gender")?.value || "",
-        allergy: document.getElementById("allergy")?.value || "",
-        skinType: document.getElementById("skinType")?.value || ""
-    };
-}
 
 let rulesData = null;
 
-fetch("/public/javascript/rules.json")
-  .then(res => res.json())
+fetch("/javascript/rules.json")
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return res.json();
+  })
   .then(data => {
     rulesData = data;
     console.log("rules loaded:", rulesData);
   })
   .catch(err => console.error("โหลด rules.json ไม่สำเร็จ:", err));
 
-// ส่งภาพไปยัง API และแสดงผลลัพธ์
-const api_predict = (location.hostname === "localhost" || location.hostname === "127.0.0.1") ? "http://127.0.0.1:8000/predict" : "/api/predict";
-async function sendImageToAPI(base64Image) {
-    const imgTag = document.getElementById("resultImage");
-    const userData = getUserInput();
+function getCookie(name) {
+  const m = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]*)'));
+  return m ? decodeURIComponent(m[2]) : null;
+}
 
+let csrfReady = false;
+async function ensureCsrf() {
+  if (csrfReady) return;
+  await fetch('/sanctum/csrf-cookie', { credentials: 'include' });
+  csrfReady = true;
+}
+
+async function saveScanToBackend(payload) {
+  await ensureCsrf();  // สำคัญ!
+  const xsrf = getCookie('XSRF-TOKEN');
+  const res = await fetch('/api/scan-results', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': xsrf,      // สำคัญ!
+    },
+    credentials: 'include',      // สำคัญ! ให้เบราว์เซอร์แนบ session cookie
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(`saveScanToBackend error: ${res.status} ${res.statusText}: ${await res.text()}`);
+  return res.json();
+}
+
+// Utility: แปลง dataURL (base64 image) ให้กลายเป็น Blob สำหรับ FormData
+function dataURLtoBlob(dataURL) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1]; // ดึง MIME type เช่น image/jpeg
+    const bstr = atob(arr[1]); // แปลง Base64 เป็น binary string
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+}
+
+
+// ส่งภาพไปยัง API และแสดงผลลัพธ์
+const api_predict = (location.hostname === "localhost" || location.hostname === "10.225.0.13") ? "http://10.225.0.13:8001/predict" : "/api/predict";
+
+
+
+// ส่งภาพไปยัง API และแสดงผลลัพธ์ (แบบ multipart/form-data)
+async function sendImageToAPI(base64Image) {
+  const imgTag = document.getElementById("resultImage");
+
+  const form = new FormData();
+  form.append('file', dataURLtoBlob(base64Image), 'capture.jpg');
+
+  try {
+    // ใช้ตัวแปร api_predict ที่ประกาศไว้แล้ว เพื่อไม่ hardcode URL
+    const res = await fetch(api_predict, { method: 'POST', body: form });
+
+    if (!res.ok) {
+      const msg = await res.text();
+      throw new Error(`Server returned ${res.status}: ${msg}`);
+    }
+
+    // ✅ ต้อง parse JSON มาก่อน แล้วค่อยใช้
+    const result = await res.json();
+
+    const annotatedDataUrl = "data:image/jpeg;base64," + result.image;
+    imgTag.src = annotatedDataUrl;
+    imgTag.style.display = "block";
+
+    // กรณีไม่พบสิว (รองรับได้ทั้งแบบ object มี key no_detections หรือ array ว่าง)
+    const rr = result["rule_response"];
+    const noDetections =
+      (rr && rr.no_detections) ||
+      (Array.isArray(rr) && rr.length === 0);
+
+    if (noDetections) {
+      noresult();
+      showResults(annotatedDataUrl);;
+      return result;
+    }
+
+    // ดันผลลัพธ์ไปแสดง
+    result_push(result);
+
+    // เช็คว่า rulesData โหลดเสร็จแล้วก่อนเรียก product_push
+    if (rulesData && rulesData["Product"]) {
+      product_push(result, rulesData);
+    } else {
+      console.warn("rulesData ยังไม่พร้อม: ข้าม product_push รอบนี้");
+      const acneContainer = document.getElementById("acneTypeCardsContainer");
+      if (acneContainer) {
+        acneContainer.innerHTML = `<div class="no-product-card"><p>ไม่สามารถโหลดข้อมูลสินค้าได้</p></div>`;
+      }
+    }
+
+    showResults(annotatedDataUrl);
+
+    // ===== เตรียม payload ให้ตรงกับ Controller =====
+    // map detections ให้เป็น array ของ { class_id, class_name }
+    const detections = (result.detections || []).map(d => ({
+      class_id: typeof d.class_id === 'number' ? d.class_id
+              : (typeof d.class_id === 'string' ? parseInt(d.class_id, 10) : null),
+      class_name: d.class_name ?? null,
+    }));
+
+    // *** จุดสำคัญ: ต้องมี result_image_base64 และ field ชื่อ "result.detections" ***
     const payload = {
-        image: base64Image,
-        age: userData.age,
-        gender: userData.gender,
-        allergy: userData.allergy,
-        skinType: userData.skinType
+      result_image_base64: annotatedDataUrl,     // << ใช้ภาพที่ใส่กรอบบันทึกลง DB
+      skin_type: 'unknown',
+      result: { detections },                    // << ต้องห่อใน result.detections
+      // (ถ้าอยากส่ง rule_response ไปเก็บเพิ่ม ให้ backend รองรับเพิ่มเอง)
     };
 
-    try {
-        const response = await fetch(api_predict, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
+    const saved = await saveScanToBackend(payload);
+    console.log('Saved:', saved);
+    return result;
 
-        if (!response.ok) {
-            throw new Error("Server returned " + response.status);
-        }
-
-        const result = await response.json();
-        // console.log(result)
-        const resultImageUrl = "data:image/jpeg;base64," + result.image;
-        imgTag.src = resultImageUrl;
-        imgTag.style.display = "block";
-        // ✅ ตรวจสอบว่าไม่มีสิว (Array)
-        if (result["rule_response"]["no_detections"]) {
-            // แสดงข้อความไม่พบสิวในกล่องแนะนำ
-            noresult();
-            showResults(resultImageUrl); // ✅ แสดงหน้า results
-            return;
-        }
-        result_push(result);
-        product_push(result, rulesData);
-        showResults(resultImageUrl);
-
-        return result;
-    } catch (err) {
-        console.error("Failed to send image:", err);
-        alert("เกิดข้อผิดพลาดในการวิเคราะห์ผิว");
-    }
+  } catch (err) {
+    console.error("Failed to send image:", err);
+    alert("เกิดข้อผิดพลาดในการวิเคราะห์ผิว");
+  }
 }
 
 
@@ -442,7 +514,13 @@ function result_push(result) {
 function product_push(result, rules) {
   const acneContainer = document.getElementById("acneTypeCardsContainer");
   acneContainer.innerHTML = "";
-  acneContainer.className = "acne-type-grid"; // เพิ่ม class grid
+  acneContainer.className = "acne-type-grid";
+
+  if (!rules || !rules["Product"]) {
+    console.error("Rules data not loaded or missing Product data");
+    acneContainer.innerHTML = `<div class="no-product-card"><p>ไม่สามารถโหลดข้อมูลสินค้าได้</p></div>`;
+    return;
+  }
 
   const ruleArray = result["rule_response"];
   const productLookup = createProductLookup(rules["Product"]);
@@ -511,13 +589,13 @@ const acneItem = window.__ruleArray[index];
 
   modal.style.display = "block";
 }
-
+window.showProducts = showProducts;
 
 // ปิด Modal
 function closeModal() {
   document.getElementById("productModal").style.display = "none";
 }
-
+window.closeModal = closeModal;
 
 // แปลง array ของ product object ให้กลายเป็น dictionary lookup
 function createProductLookup(productArray) {
