@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="doctor-card">
-                    <img src="doctor.png" alt="ดร. ซาราห์ จอห์นสัน" class="doctor-image" />
+                    <img src="/image/doctor.png" alt="ดร. ซาราห์ จอห์นสัน" class="doctor-image" />
                     <div class="doctor-info">
                     <h3>ดร. ซาราห์ จอห์นสัน</h3>
                     <p class="position">
@@ -85,105 +85,6 @@
                     </p>
                     </div>
                 </div>
-            </section>
-            <!-- Team section -->
-            <section class="doctor-section">
-                <div class="section-header">
-                    <h2>สมาชิกในทีม</h2>
-                </div>
-
-                <!-- ✅ เพิ่ม container ห่อ grid -->
-                {{-- <div class="doctor-grid">
-                    <!-- สมาชิกทั้ง 10 ตามที่คุณใส่ไว้ -->
-                    <div class="doctor-card">
-                        <img src="images/member1.jpg" alt="ชนิสรา สอนเหลิม" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>ชนิสรา สอนเหลิม</h3>
-                            <p class="position">เมียหมอผ่าตัด</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 2 -->
-                    <div class="doctor-card">
-                        <img src="images/member2.jpg" alt="ทุ่มเท ทุ่มใจ" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>ทุ่มเท ทุ่มใจ</h3>
-                            <p class="position">พนักงานทำความสะอาด</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 3 -->
-                    <div class="doctor-card">
-                        <img src="images/member3.jpg" alt="ใยใหม ใยเเมงมุม" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>ใยใหม ใยเเมงมุม</h3>
-                            <p class="position">ผู้ช่วยพนักงานทำความสะอาด</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 4 -->
-                    <div class="doctor-card">
-                        <img src="images/member4.jpg" alt="ปิ่นทิพย์ จริงใจ" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>ปิ่นทิพย์ จริงใจ</h3>
-                            <p class="position">QA testers</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 5 -->
-                    <div class="doctor-card">
-                        <img src="images/member5.jpg" alt="บัวบาดาล ใต้ทะเลอ่าวไทย" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>บัวบาดาล ใต้ทะเลอ่าวไทย</h3>
-                            <p class="position">ลูกประธานบริษัท</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 6 -->
-                    <div class="doctor-card">
-                        <img src="images/member6.jpg" alt="รอนชดาภัทร ทรัพย์ไม่มีรักหมาเด็กทุกทีแต่เธอไม่ลืมคนเก่า" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>รอนชดาภัทร ทรัพย์ไม่มีรักหมาเด็กทุกทีแต่เธอไม่ลืมคนเก่า</h3>
-                            <p class="position">Marketing Director</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 7 -->
-                    <div class="doctor-card">
-                        <img src="images/member7.jpg" alt="นัท แต่เพื่อนเรียกนัทนะโซ่" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>นัท แต่เพื่อนเรียกนัทนะโซ่</h3>
-                            <p class="position">นายแบบสุดเท่</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 8 -->
-                    <div class="doctor-card">
-                        <img src="images/member8.jpg" alt="วีราทร ข้างถนน" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>วีราทร ข้างถนน</h3>
-                            <p class="position">ฮมเลสที่นอนอยู่ข้างๆคลินิก</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 9 -->
-                    <div class="doctor-card">
-                        <img src="images/member9.jpg" alt="แป๋วแหวว  แจ๋วกว่านี้มีอีกมั้ย" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>แป๋วแหวว  แจ๋วกว่านี้มีอีกมั้ย</h3>
-                            <p class="position">นักวิจัยการนั่งเฉยๆ ให้ดูเหมือนทำงาน</p>
-                        </div>
-                    </div>
-
-                    <!-- สมาชิก 10 -->
-                    <div class="doctor-card">
-                        <img src="images/member10.jpg" alt="ปลาทอง ปราบเซียน" class="doctor-image" />
-                        <div class="doctor-info">
-                            <h3>ปลาทอง ปราบเซียน</h3>
-                            <p class="position">หัวหน้าฝ่ายพัฒนาบุคลากรปราบเซียน</p>
-                        </div>
-                    </div>
-                </div> --}}
             </section>
 
             <!-- Hero Section -->
@@ -209,7 +110,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <h3>ส่งอีเมลหาเรา</h3>
-                        <p>เรายินดีรับฟังทุกความคิดเห็นจากคุณsupport@skinscan.ai</p>
+                        <p>support@skinscan.ai<br>เรายินดีรับฟังทุกความคิดเห็นจากคุณ</p>
                     </div>
 
                     <div class="contact-item">

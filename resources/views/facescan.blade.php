@@ -61,11 +61,6 @@
                     @auth
                         <h2>เริ่มการวิเคราะห์ผิวหน้าของคุณ</h2>
                         <div class="scan-methods">
-                            {{-- <button class="scan-method" onclick="selectScanMode('camera')">
-                                <i class="fas fa-camera"></i>
-                                <h3>สแกนผ่านกล้อง</h3>
-                                <p>ถ่ายภาพสดโดยใช้กล้องของอุปกรณ์ของคุณเพื่อวิเคราะห์ทันที</p>
-                            </button> --}}
 
                             <button class="scan-method" onclick="selectScanMode('upload')">
                                 <i class="fas fa-upload"></i>
@@ -96,33 +91,6 @@
                     </div>
                 </div>
 
-                <!-- Camera Mode -->
-                {{-- <div id="cameraMode" class="scan-step">
-                    <div class="scan-header">
-                        <h2>Camera Scanner</h2>
-                        <button class="btn-cancel" onclick="resetScan()">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-
-                    <div class="camera-container">
-                        <video id="video" autoplay playsinline muted></video>
-                        <canvas id="canvas" style="display: none;"></canvas>
-                        <div class="camera-overlay">
-                            <div class="face-guide">
-                                <span>Position your face here</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="camera-controls">
-                        <button class="btn-primary" onclick="capturePhoto()">
-                            <i class="fas fa-camera"></i>
-                            <span>Capture Photo</span>
-                        </button>
-                    </div>
-                </div> --}}
-
                 <!-- Upload Mode -->
                 <div id="uploadMode" class="scan-step">
                     <div class="scan-header">
@@ -137,7 +105,6 @@
                         <h3>Click to upload or drag & drop</h3>
                         <p>JPG, PNG, or WEBP (max 10MB)</p>
                     </div>
-
                     <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
                 </div>
 

@@ -98,7 +98,7 @@
         <div id="advancedPanel" class="{{ request()->hasAny(['ingredient','acneType']) ? '' : 'hidden' }} rounded-2xl border border-gray-200 p-4 mt-4 bg-gray-50">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label class="block text-sm text-gray-600 mb-1">ประเภทผิว/ความเหมาะสม (จาก suitability_info)</label>
+              <label class="block text-sm text-gray-600 mb-1">ประเภทผิว/ความเหมาะสม</label>
               <select name="acneType" class="w-full h-10 rounded-lg border border-gray-300 px-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option value="">— ทุกประเภท —</option>
                 @foreach(($skinOptions ?? collect()) as $opt)

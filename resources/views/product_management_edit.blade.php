@@ -22,10 +22,10 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-buttons">
-                        <a href="{{ route('product_management.create') }}" class="btn-primary">
+                        <a href="{{ route('product_management.create') }}" class="btn-secondary">
                             <span>Add</span>
                         </a>
-                        <a href="{{ route('product_management.edit') }}" class="btn-secondary">
+                        <a href="{{ route('product_management.edit') }}" class="btn-primary">
                             <span>Products</span>
                         </a>
                     </div>

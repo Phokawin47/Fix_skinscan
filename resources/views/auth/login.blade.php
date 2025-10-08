@@ -2,7 +2,6 @@
     @vite('resources/css/login.css')
 @endpush
 
-
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
