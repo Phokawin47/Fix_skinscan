@@ -219,9 +219,9 @@ function resetScan() {
     const scannersection = document.getElementById("cameraMode");
 
 
-    video.style.display = "";
-    captureButton.style.display = "";
-    scannersection.style.display = "";
+    // video.style.display = "";
+    // captureButton.style.display = "";
+    // scannersection.style.display = "";
     document.querySelector('.skin-scan-section').style.display = 'block';
 
 
