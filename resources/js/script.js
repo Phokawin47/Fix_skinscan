@@ -338,7 +338,7 @@ fetch("/javascript/rules.json")
   })
   .then(data => {
     rulesData = data;
-    console.log("rules loaded:", rulesData);
+    // console.log("rules loaded:", rulesData);
   })
   .catch(err => console.error("โหลด rules.json ไม่สำเร็จ:", err));
 
@@ -534,7 +534,7 @@ function product_push(result, rules) {
     card.className = "acne-type-card";
     card.innerHTML = `
       <h3>${acneType}</h3>
-      <img src="product_image.png" width="100%" onclick="showProducts(${index})">
+      <img src="/image/product_image.png" onclick="showProducts(${index})">
       <p>จำนวนสินค้าแนะนำ: ${productNames.length}</p>
     `;
     acneContainer.appendChild(card);

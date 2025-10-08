@@ -47,20 +47,32 @@
             <div class="scan-container">
                 <!-- Mode Selection -->
                 <div id="modeSelection" class="scan-step active">
-                    <h2>เริ่มการวิเคราะห์ผิวหน้าของคุณ</h2>
 
-                    <div class="scan-methods">
-                        <button class="scan-method" onclick="selectScanMode('camera')">
-                            <i class="fas fa-camera"></i>
-                            <h3>สแกนผ่านกล้อง</h3>
-                            <p>ถ่ายภาพสดโดยใช้กล้องของอุปกรณ์ของคุณเพื่อวิเคราะห์ทันที</p>
-                        </button>
+                    @guest
+                        <div style="text-align: center; padding: 2rem;">
+                            <p style="font-size: 1.1rem; color: var(--gray-700); margin-bottom: 1.5rem;">กรุณาเข้าสู่ระบบเพื่อใช้งานฟีเจอร์นี้</p>
+                            <a href="{{ route('login', ['intended' => url()->current()]) }}" class="btn-primary" style="font-size: 1.125rem; padding: 0.875rem 2rem;">
+                                <i class="fa-solid fa-user"></i>
+                                <span>เข้าสู่ระบบ / สมัครสมาชิก</span>
+                            </a>
+                        </div>
+                    @endguest
 
-                        <button class="scan-method" onclick="selectScanMode('upload')">
-                            <i class="fas fa-upload"></i>
-                            <h3>อัปโหลดรูปภาพ</h3>
-                            <p>อัปโหลดรูปถ่ายที่มีอยู่จากอุปกรณ์ของคุณเพื่อวิเคราะห์</p>
-                        </button>
+                    @auth
+                        <h2>เริ่มการวิเคราะห์ผิวหน้าของคุณ</h2>
+                        <div class="scan-methods">
+                            {{-- <button class="scan-method" onclick="selectScanMode('camera')">
+                                <i class="fas fa-camera"></i>
+                                <h3>สแกนผ่านกล้อง</h3>
+                                <p>ถ่ายภาพสดโดยใช้กล้องของอุปกรณ์ของคุณเพื่อวิเคราะห์ทันที</p>
+                            </button> --}}
+
+                            <button class="scan-method" onclick="selectScanMode('upload')">
+                                <i class="fas fa-upload"></i>
+                                <h3>อัปโหลดรูปภาพ</h3>
+                                <p>อัปโหลดรูปถ่ายที่มีอยู่จากอุปกรณ์ของคุณเพื่อวิเคราะห์</p>
+                            </button>
+                    @endauth
                     </div>
 
                     <div class="tip">
@@ -85,7 +97,7 @@
                 </div>
 
                 <!-- Camera Mode -->
-                <div id="cameraMode" class="scan-step">
+                {{-- <div id="cameraMode" class="scan-step">
                     <div class="scan-header">
                         <h2>Camera Scanner</h2>
                         <button class="btn-cancel" onclick="resetScan()">
@@ -109,7 +121,7 @@
                             <span>Capture Photo</span>
                         </button>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Upload Mode -->
                 <div id="uploadMode" class="scan-step">
@@ -221,7 +233,7 @@
                 <div class="footer-contact">
                     <h3>Contact</h3>
                     <div class="contact-info">
-                        <p>Phokawin.s@kkumail.com</p>
+                        <p>Bachelor of Science Program in Artificial Intelligence</p>
                         <p>มหาวิทยาลัยขอนแก่น 123 หมู่ 16 <br>ถนนมิตรภาพ ตำบลในเมือง อำเภอเมืองขอนแก่น 40002</p>
                     </div>
                 </div>

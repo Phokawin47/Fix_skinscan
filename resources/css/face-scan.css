@@ -5,7 +5,6 @@
     padding: 3rem 1rem;
     background-color: #f9f9fb;
     text-align: center;
-    font-family: 'Prompt', sans-serif;
     background-image: url('../images/left-face.png'), url('../images/right-face.png');
     background-repeat: no-repeat, no-repeat;
     background-position: left bottom, right bottom;
@@ -560,7 +559,7 @@
 }
 
 .results-content {
-    display: flex;
+    /* display: flex; */
     gap: 2rem;
     flex-wrap: wrap;
 }

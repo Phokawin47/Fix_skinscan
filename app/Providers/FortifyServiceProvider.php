@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LogoutResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -67,6 +68,14 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 return redirect(route('redirect.idx')); // Redirects to the homepage
 
+            }
+        });
+
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
+            public function toResponse($request): RedirectResponse
+            {
+                return redirect()->intended(route('redirect.idx'));
             }
         });
 

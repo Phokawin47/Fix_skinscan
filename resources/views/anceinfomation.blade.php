@@ -326,7 +326,7 @@
                 <div class="footer-contact">
                     <h3>Contact</h3>
                     <div class="contact-info">
-                        <p>Phokawin.s@kkumail.com</p>
+                        <p>Bachelor of Science Program in Artificial Intelligence</p>
                         <p>มหาวิทยาลัยขอนแก่น 123 หมู่ 16 <br>ถนนมิตรภาพ ตำบลในเมือง อำเภอเมืองขอนแก่น 40002</p>
                     </div>
                 </div>
